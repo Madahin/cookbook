@@ -2,7 +2,7 @@ Title: Flammekueche façon Kochersberg
 SubTitle: ou pourquoi l'Alsace c'est vraiment sympa, même en été (malgré qu'il y ait des alsaciens)
 Date: 2021-09-16
 Author: Arnaud Dupont
-Category: Entrée / Plat Principal
+Category: Plat Principal
 Tags: vegan,vegetarian,lactose,gluten,halal,kasher
 Image: flammekueche_summary.jpg
 Background: flammekueche_background.jpg
