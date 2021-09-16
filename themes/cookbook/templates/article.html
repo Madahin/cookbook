@@ -1,0 +1,127 @@
+{%- if article.lang %}{% set DEFAULT_LANG = article.lang %}{% endif -%}
+{% extends "base.html" %}
+
+{% block headers %}
+    {{ super() }}
+    <meta name="author"   content="{{ article.author }}" />
+    <meta name="keywords" content="{{ article.tags|join(', ') }}" />
+{% endblock %}
+
+{% block title %}{{ article.title }} — {{ super() }}{% endblock %}
+
+{%- block content %}
+<article>
+    <div class="recipe-head">
+        <p class="recipe-data"><span class="recipe-categories">{{ article.category }}</span>
+					{%- if article.tags %}
+					 -
+					{% endif -%}
+					{% for tag in article.tags %}
+					<img class="icon" src="{{ SITEURL }}/theme/img/icon/{{ tag }}.svg"/>
+					{% endfor -%}
+					{%- if article.tags %}
+					 -
+					{% endif -%}
+					<span class="recipe-time">40 minutes</span> - Par <a href="{{ article.author.url }}">{{ article.author }}</a></p>
+        <hr/>
+        <h1 class="recipe-title"><a href="recipe.html">{{ article.title }}</a></h1>
+        <h2 class="recipe-subtitle">{{ article.subtitle }}</h2>
+        <hr/>
+    </div>
+
+    <div class="recipe-intro">
+        {{ article.summary }}
+    </div>
+
+    <hr/>
+
+    <div class="recipe-requierements-selection">
+        <span class="nb-selector-icon">▼</span>
+        <select name="recipe-nb-persons" class="recipe-nb-persons">
+            <option value="1">Pour 1 Personne</option>
+            <option value="2">Pour 2 Personnes</option>
+            <option value="3">Pour 3 Personnes</option>
+            <option value="4">Pour 4 Personnes</option>
+            <option value="5">Pour 5 Personnes</option>
+            <option value="6">Pour 6 Personnes</option>
+            <option value="7">Pour 7 Personnes</option>
+            <option value="8">Pour 8 Personnes</option>
+            <option value="9">Pour 9 Personnes</option>
+            <option value="10">Pour 10 Personnes</option>
+            <option value="11">Pour 11 Personnes</option>
+            <option value="12">Pour 12 Personnes</option>
+        </select>
+    </div>
+
+    {%- if article.ingredients %}
+
+    <div class="recipe-requierements">
+
+        {% for ingredients_category in article.ingredients.split(',') %}
+        <div class="recipe-ingredients">
+            <h1>{{ article[ingredients_category].split('|')[0] }}</h1>
+            <ul>
+                {% for ingredient in article[ingredients_category].split('|')[1:] %}
+                <li><strong>{{ ingredient.split(' - ')[0] }}</strong> - {{ ingredient.split(' - ')[1] }}</li>
+                {% endfor -%}
+            </ul>
+        </div>
+        {% endfor -%}
+
+    </div>
+
+    <hr/>
+
+    {% endif -%}
+
+    <div class="recipe-steps">
+
+        <!--------------------------- FREE ZONE FOR MARKDOWN --------------------------->
+
+        {{ article.content}}
+
+        <!------------------------- END FREE ZONE FOR MARKDOWN ------------------------->
+    </div>
+
+    {%- if article.degustation or article.conservation or article.notes %}
+    <hr/>
+
+    <div class="recipe-footer">
+
+        {%- if article.degustation %}
+        <div class="recipe-degustation">
+            <h1>Dégustation</h1>
+            <ul>
+                {% for degustation_tips in article.degustation.split('|') %}
+                <li>{{ degustation_tips }}</li>
+                {% endfor -%}
+            </ul>
+        </div>
+        {% endif -%}
+
+        {%- if article.conservation %}
+        <div class="recipe-conservation">
+            <h1>Conservation</h1>
+            <ul>
+                {% for conservation_tips in article.conservation.split('|') %}
+                <li>{{ conservation_tips }}</li>
+                {% endfor -%}
+            </ul>
+        </div>
+        {% endif -%}
+
+        {%- if article.notes %}
+        <div class="recipe-notes">
+            <h1>Notes et remarques</h1>
+            <ul>
+                {% for note in article.notes.split('|') %}
+                <li>{{ note }}</li>
+                {% endfor -%}
+            </ul>
+        </div>
+        {% endif -%}
+
+    </div>
+    {% endif -%}
+</article>
+{% endblock content -%}

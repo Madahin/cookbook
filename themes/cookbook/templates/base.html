@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		{% block headers %}
+		<!-- ENCODAGE -->
+			<meta charset="utf-8" />
+		<!-- PAGE INFO -->
+			<title>{% block title %}{{ SITENAME }}{%endblock%}</title>
+		<!-- RESPONSIVENESS -->
+			<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+		<!-- CSS -->
+			<link rel="stylesheet" href="{{ SITEURL }}/theme/css/style.css"/>
+		<!-- JavaScript -->
+			<script src="{{ SITEURL }}/theme/js/script.js"></script>
+		{% endblock headers %}
+	</head>
+
+	<body class="">
+		<noscript>JavaScript est actuellement désactivé sur votre navigateur, pour améliorer votre visite, vous devriez l'activer : <a href="https://www.enable-javascript.com">voir comment</a></noscript>
+
+		<header class="hidden">
+			<h1><a href="index.html"><img id="site-logo" src="{{ SITEURL }}/theme/img/logo/site-logo.svg"></a></h1>
+			<ul>
+				<li><a href="toc.html"><img src="{{ SITEURL }}/theme/img/icon/hamburger-button.svg"/><span class="button-title">Sommaire</span></a></li>
+				<li><a href="categories.html"><img src="{{ SITEURL }}/theme/img/icon/categories-button.svg"/><span class="button-title">Catégories</a></span></li>
+			</ul>
+		</header>
+
+
+		<main>
+			<!-- FOCUS (modal window, hidden by default) -->
+			<div class="focus" onclick="leaveFocus();">
+				<div class="focus-background" onclick="leaveFocus();"></div>
+				<div class="focus-element" onclick="leaveFocus();">
+				</div>
+			</div>
+
+			<!-- BACKGROUND IMAGE -->
+			<div class="recipe-illustration">
+				{%- if article %}
+				<img src="{{ SITEURL }}/images/{{ article.background }}"/>
+				{% else %}
+				<img src="{{ SITEURL }}/theme/img/default_background.jpg"/>
+				{% endif -%}
+
+			</div>
+
+			<!-- ARTICLES -->
+{% block content %}
+{% endblock content %}
+
+		<footer>
+			{%- if articles_page and articles_paginator.num_pages > 1 %}
+			<div class="navigation">
+				{%- if articles_page.has_previous() %}
+				<a class="page-number" href="{{ SITEURL }}/{{ page_name }}{{ articles_page.previous_page_number() }}.html"><</a>
+				{%- if articles_page.number - 1 > 1 %}
+				<a class="page-number" href="{{ SITEURL }}/{{ page_name }}.html">1</a>
+				{%- if articles_page.number - 2 > 1 %}
+				<div class="page-number">...</div>
+				{% endif -%}
+				{% endif -%}
+				{% endif -%}
+
+				{%- for i in range(1,articles_paginator.num_pages+1) %}
+				  {%- if articles_page.number - 2 < i < articles_page.number + 2 %}
+					{%- if i == articles_page.number %}
+				<a class="page-number current">{{loop.index}}</a>
+					{% else %}
+				<a class="page-number" href="{{SITEURL}}/{{ page_name }}{{ ( i if i != 1 else "" ) }}.html">{{loop.index}}</a>
+					{% endif -%}
+				  {% endif -%}
+				{% endfor -%}
+
+				{%- if articles_page.has_next() %}
+				{%- if articles_page.number + 2 < articles_paginator.num_pages %}
+				<div class="page-number">...</div>
+				{% endif -%}
+				{%- if articles_page.number + 1 < articles_paginator.num_pages %}
+				<a class="page-number" href="{{ SITEURL }}/{{ page_name }}{{ articles_paginator.num_pages }}.html">{{ articles_paginator.num_pages }}</a>
+				{% endif -%}
+				<a class="page-number" href="{{ SITEURL }}/{{ page_name }}{{ articles_page.next_page_number() }}.html">></a>
+				{% endif -%}
+			</div>
+			{%- endif%}
+
+			<div class="credit">
+				recettes et back-end par <a href="https://madahindev.com/"><img id="fleurot-logo" src="{{ SITEURL }}/theme/img/logo/fleurot-signature.svg"></a> - front-end par <a href="https://arnaud.engineer"><img id="arnaud-logo" src="{{ SITEURL }}/theme/img/logo/arnaud-engineer.svg"></a>
+			</div>
+		</footer>
+	</body>
+</html>

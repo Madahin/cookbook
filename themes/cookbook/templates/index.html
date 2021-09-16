@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{%- block content %}
+{% for article in articles_page.object_list %}
+			<article>
+				<div class="recipe-miniature">
+					<img src="{{ SITEURL }}/images/{{ article.image }}"/>
+				</div>
+
+				<div class="recipe-head">
+					<p class="recipe-data"><span class="recipe-categories">{{ article.category }}</span>
+					{%- if article.tags %}
+					 -
+					{% endif -%}
+					{% for tag in article.tags %}
+					<img class="icon" src="{{ SITEURL }}/theme/img/icon/{{ tag }}.svg"/>
+					{% endfor -%}
+					{%- if article.tags %}
+					 -
+					{% endif -%}
+					<span class="recipe-time">40 minutes</span> - Par <a href="{{ article.author.url }}">{{ article.author }}</a></p>
+					<hr/>
+					<h1 class="recipe-title"><a href="recipe.html">{{ article.title }}</a></h1>
+					<hr/>
+				</div>
+
+				<div class="recipe-intro">
+					{{ article.summary }}
+				</div>
+				<a href="{{ SITEURL }}/{{ article.url }}">➥ lire la suite</a>
+			</article>
+{% endfor -%}
+{% endblock content -%}
